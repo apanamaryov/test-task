@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import {useParams} from 'react-router-dom';
 import axios, {AxiosRequestConfig, RawAxiosRequestHeaders} from "axios";
-import {useAuth} from "../../context/UserContext";
+import {useAuth} from "../../context/useAuth";
 
 export const UserInfo = () => {
   const { id } = useParams();
@@ -12,7 +12,7 @@ export const UserInfo = () => {
     const config: AxiosRequestConfig = {
       headers: {
         'Accept': 'application/json',
-        'Authorization': `Bearer ${auth.user.accessToken}`,
+        'Authorization': `Bearer ${auth?.user?.accessToken}`,
       } as RawAxiosRequestHeaders,
     };
 

@@ -1,14 +1,14 @@
 import React, {useEffect} from "react";
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useAuth } from "../../context/UserContext";
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from "../../context/useAuth";
 
 export const SignIn = () => {
   const navigate = useNavigate();
   const auth = useAuth();
 
   useEffect(() => {
-    if (auth.user) navigate(`/user/${auth.user.userId}`)
-  }, [auth.user]);
+    if (auth?.user) navigate(`/user/${auth?.user.userId}`)
+  }, [auth?.user, navigate]);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -17,7 +17,7 @@ export const SignIn = () => {
     const username = formData.get("username") as string;
     const password = formData.get("password") as string;
 
-    auth.login({ username, password });
+    auth?.login({ username, password });
   }
 
 

@@ -1,6 +1,7 @@
 import React, {createContext, useState} from "react";
 import { Navigate } from "react-router-dom";
 import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from "axios";
+import {useAuth} from "./useAuth";
 
 interface LoginCredentials {
   username: string;
@@ -15,12 +16,17 @@ interface User {
   phone: string;
 }
 
+interface User {
+  userId: string;
+  accessToken: string;
+}
+
 interface UserContextType {
-  user: any;
+  user: User | null;
   login: (credentials: LoginCredentials) => void;
 }
 
-export const UserContext = createContext<UserContextType>(null!);
+export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
@@ -41,14 +47,12 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   return <UserContext.Provider value={{ user, login }}>{children}</UserContext.Provider>;
 }
 
-export function useAuth() {
-  return React.useContext(UserContext);
-}
+
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
   const auth = useAuth();
 
-  if (!auth.user) {
+  if (!auth?.user) {
     return <Navigate to="/" replace />;
   }
 
