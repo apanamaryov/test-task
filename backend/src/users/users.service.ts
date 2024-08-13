@@ -34,8 +34,9 @@ export class UsersService {
     const { username, password } = authCredentials;
 
     const user = await this.userModel.findOne({ where: { username } });
+    const passwordIsValid = await bcrypt.compare(password, user.password);
 
-    if (user && (await bcrypt.compare(password, user.password))) {
+    if (user && passwordIsValid) {
       const payload: JwtPayload = { username };
       const accessToken: string = this.jwtService.sign(payload);
 
