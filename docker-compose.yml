@@ -1,0 +1,15 @@
+volumes:
+  test-data:
+
+services:
+  db:
+    image: mysql:latest
+    container_name: db
+    ports:
+      - "3306:3306"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: test_db
+    volumes:
+      - test-data:/var/lib/mysql
