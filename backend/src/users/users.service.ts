@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import {AuthCredentialsDto} from "./dto/auth-credentials.dto";
 import {JwtService} from "@nestjs/jwt";
 import {JwtPayload} from "./jwt-payload.interface";
+import {AuthSuccessResponseDto} from "./dto/auth-success-response.dto";
 
 @Injectable()
 export class UsersService {
@@ -27,7 +28,7 @@ export class UsersService {
     await this.userModel.create(newUser);
   }
 
-  async signIn(@Body() authCredentials: AuthCredentialsDto): Promise<{ accessToken: string }> {
+  async signIn(@Body() authCredentials: AuthCredentialsDto): Promise<AuthSuccessResponseDto> {
     const { username, password } = authCredentials;
 
     const user = await this.userModel.findOne({ where: { username } });
@@ -36,7 +37,7 @@ export class UsersService {
       const payload: JwtPayload = { username };
       const accessToken: string = await this.jwtService.sign(payload);
 
-      return { accessToken };
+      return { userId: user.id, accessToken };
     } else {
       throw new UnauthorizedException('Please check your login credentials.');
     }
