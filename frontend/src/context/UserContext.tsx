@@ -1,7 +1,11 @@
-import React, {createContext, useState} from "react";
-import { Navigate } from "react-router-dom";
-import axios, { AxiosRequestConfig, RawAxiosRequestHeaders, AxiosResponse } from "axios";
-import {useAuth} from "./useAuth";
+import React, { createContext, useState } from 'react';
+import { Navigate } from 'react-router-dom';
+import axios, {
+  AxiosRequestConfig,
+  RawAxiosRequestHeaders,
+  AxiosResponse,
+} from 'axios';
+import { useAuth } from './useAuth';
 
 interface LoginCredentials {
   username: string;
@@ -34,20 +38,25 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (credentials: LoginCredentials) => {
     const config: AxiosRequestConfig = {
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
       } as RawAxiosRequestHeaders,
     };
 
-    const response: AxiosResponse =
-      await axios.post('http://localhost:3001/api/v1/users/signIn', credentials, config);
+    const response: AxiosResponse = await axios.post(
+      'http://localhost:3001/api/v1/users/signIn',
+      credentials,
+      config,
+    );
 
     setUser(response.data);
-  }
+  };
 
-  return <UserContext.Provider value={{ user, login }}>{children}</UserContext.Provider>;
-}
-
-
+  return (
+    <UserContext.Provider value={{ user, login }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 
 export function RequireAuth({ children }: { children: JSX.Element }) {
   const auth = useAuth();
