@@ -6,34 +6,16 @@ import axios, {
   AxiosResponse,
 } from 'axios';
 import { useAuth } from './useAuth';
-
-interface LoginCredentials {
-  username: string;
-  password: string;
-}
-
-interface User {
-  id: string;
-  username: string;
-  name: string;
-  email: string;
-  phone: string;
-}
-
-interface User {
-  userId: string;
-  accessToken: string;
-}
-
-interface UserContextType {
-  user: User | null;
-  login: (credentials: LoginCredentials) => void;
-}
+import {
+  LoginCredentials,
+  SuccessAuthResponse,
+  UserContextType,
+} from '../types';
 
 export const UserContext = createContext<UserContextType | null>(null);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SuccessAuthResponse | null>(null);
 
   const login = async (credentials: LoginCredentials) => {
     const config: AxiosRequestConfig = {

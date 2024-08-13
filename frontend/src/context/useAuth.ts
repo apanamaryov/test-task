@@ -1,6 +1,5 @@
-import React from 'react';
+import { useContext } from 'react';
 import { UserContext } from './UserContext';
+import { UserContextType } from '../types';
 
-export function useAuth() {
-  return React.useContext(UserContext);
-}
+export const useAuth = () => useContext<UserContextType | null>(UserContext);

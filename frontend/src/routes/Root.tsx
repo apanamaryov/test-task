@@ -1,10 +1,10 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import './root.css';
 import { RequireAuth, UserProvider } from '../context/UserContext';
 import { SignIn } from './SignIn';
 import { SignUp } from './SignUp';
 import { UserInfo } from './UserInfo';
+import './root.css';
 
 function Root() {
   return (
