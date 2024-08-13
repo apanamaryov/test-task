@@ -10,7 +10,7 @@ To run the application go to project's folder and:
 6. npm i
 7. npm start
 
-Frontend is running at http://localhost:3000 , backend at http://localhost:3000
+Frontend is running at http://localhost:3000 , backend at http://localhost:3001
 
 API
 
