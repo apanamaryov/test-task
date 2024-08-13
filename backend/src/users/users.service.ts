@@ -14,13 +14,17 @@ export class UsersService {
     private jwtService: JwtService,
   ) {}
 
-  async addUser(user: User): Promise<User> {
+  async addUser(user: User): Promise<void> {
     const { password } = user;
 
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    return this.userModel.create({...user, password: hashedPassword});
+    const newUser = {...user, password: hashedPassword};
+
+    console.log(`New user: ${JSON.stringify(newUser)}`);
+
+    await this.userModel.create(newUser);
   }
 
   async signIn(@Body() authCredentials: AuthCredentialsDto): Promise<{ accessToken: string }> {

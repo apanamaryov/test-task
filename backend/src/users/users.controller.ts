@@ -12,8 +12,8 @@ export class UsersController {
   }
 
   @Post('/signUp')
-  async signUp(@Body() user: User): Promise<User> {
-    return this.usersService.addUser(user);
+  async signUp(@Body() user: User): Promise<void> {
+    await this.usersService.addUser(user);
   }
 
   @Post('/signIn')

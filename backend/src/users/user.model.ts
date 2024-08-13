@@ -11,7 +11,7 @@ export class User extends Model {
   @Column
   phone: string;
 
-  @Column
+  @Column({ unique: true })
   username: string;
 
   @Column
