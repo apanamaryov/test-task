@@ -3,12 +3,15 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
 import * as bcrypt from 'bcrypt';
 import {AuthCredentialsDto} from "./dto/auth-credentials.dto";
+import {JwtService} from "@nestjs/jwt";
+import {JwtPayload} from "./jwt-payload.interface";
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User)
     private userModel: typeof User,
+    private jwtService: JwtService,
   ) {}
 
   async addUser(user: User): Promise<User> {
@@ -20,13 +23,16 @@ export class UsersService {
     return this.userModel.create({...user, password: hashedPassword});
   }
 
-  async signIn(@Body() authCredentials: AuthCredentialsDto): Promise<string> {
+  async signIn(@Body() authCredentials: AuthCredentialsDto): Promise<{ accessToken: string }> {
     const { username, password } = authCredentials;
 
     const user = await this.userModel.findOne({ where: { username } });
 
     if (user && (await bcrypt.compare(password, user.password))) {
-      return 'success'
+      const payload: JwtPayload = { username };
+      const accessToken: string = await this.jwtService.sign(payload);
+
+      return { accessToken };
     } else {
       throw new UnauthorizedException('Please check your login credentials.');
     }
