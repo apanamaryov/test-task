@@ -21,12 +21,6 @@ export class UsersController {
     return this.usersService.signIn(authCredentials);
   }
 
-  @Get()
-  @UseGuards(AuthGuard())
-  async users(): Promise<User[] | void> {
-    return this.usersService.findAll();
-  }
-
   @Get(':id')
   @UseGuards(AuthGuard())
   async user(@Param('id') id: string): Promise<User | void> {

@@ -42,10 +42,6 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<User[]> {
-    return this.userModel.findAll();
-  }
-
   findUserById(id: string): Promise<User> {
     return this.userModel.findOne({
       where: {
