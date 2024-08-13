@@ -23,7 +23,10 @@ export class UsersController {
 
   @Get(':id')
   @UseGuards(AuthGuard())
-  async user(@Param('id') id: string): Promise<User | void> {
-    return this.usersService.findUserById(id);
+  async user(@Param('id') id: string): Promise<Omit<User, 'password'> | void> {
+    const userData = await this.usersService.findUserById(id);
+    const { password, ...rest } = userData.dataValues;
+
+    return rest;
   }
 }

@@ -49,7 +49,7 @@ export function RequireAuth({ children }: { children: JSX.Element }) {
   const auth = useAuth();
 
   if (!auth.user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to="/" replace />;
   }
 
   return children;
