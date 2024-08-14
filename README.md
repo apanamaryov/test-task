@@ -16,13 +16,13 @@ API
 
 1. Sign Up
 
-POST http://localhost:3000/api/v1/users/signUp
+POST http://localhost:3001/api/v1/users/signUp
 
 Payload JSON: { username, password, name, email, phone }
 
 2. Sign In
 
-POST http://localhost:3000/api/v1/users/signIn
+POST http://localhost:3001/api/v1/users/signIn
 
 Payload JSON: { username, password }
 
@@ -30,6 +30,6 @@ Response: { userId, accessToken }
 
 3. Get user info by id
 
-GET http://localhost:3000/api/v1/users/{id}
+GET http://localhost:3001/api/v1/users/{id}
 
 accessToken and userId from previous request needs to be used
